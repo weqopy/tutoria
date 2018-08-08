@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from snippets import views
 from rest_framework.routers import DefaultRouter
+from rest_framework.schemas import get_schema_view
+
+schema_view = get_schema_view(title="Pastebin API")
 
 router = DefaultRouter()
 router.register(r"snippets", views.SnippetViewSet)
@@ -24,6 +27,7 @@ router.register(r"users", views.UserViewSet)
 
 
 urlpatterns = [
+    re_path(r"^schema/$", schema_view),
     re_path(r"^", include(router.urls)),
     re_path(r"^api-auth/", include("rest_framework.urls")),
 ]
